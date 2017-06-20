@@ -1,4 +1,4 @@
-# == Class: kibana::params
+# == Class: kibana_deprecated::params
 #
 # This class sets default parameters
 #
@@ -7,7 +7,7 @@
 #
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
-class kibana::params {
+class kibana_deprecated::params {
   $version                = '4.0.1'
   $base_url               = 'https://download.elasticsearch.org/kibana/kibana'
   $ca_cert                = undef

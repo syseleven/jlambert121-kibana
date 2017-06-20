@@ -1,4 +1,4 @@
-# == Class: kibana
+# == Class: kibana_deprecated
 #
 # This class installs and configures kibana3 (https://www.elastic.co/products/kibana)
 #
@@ -94,36 +94,36 @@
 #
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
-class kibana (
-  $version                       = $::kibana::params::version,
-  $base_url                      = $::kibana::params::base_url,
-  $ca_cert                       = $::kibana::params::ca_cert,
-  $install_path                  = $::kibana::params::install_path,
-  $tmp_dir                       = $::kibana::params::tmp_dir,
-  $port                          = $::kibana::params::port,
-  $bind                          = $::kibana::params::bind,
-  $es_url                        = $::kibana::params::es_url,
-  $es_preserve_host              = $::kibana::params::es_preserve_host,
-  $kibana_index                  = $::kibana::params::kibana_index,
-  $elasticsearch_username        = $::kibana::params::elasticsearch_username,
-  $elasticsearch_password        = $::kibana::params::elasticsearch_password,
-  $default_app_id                = $::kibana::params::default_app_id,
-  $pid_file                      = $::kibana::params::pid_file,
-  $request_timeout               = $::kibana::params::request_timeout,
-  $shard_timeout                 = $::kibana::params::shard_timeout,
-  $ssl_cert_file                 = $::kibana::params::ssl_cert_file,
-  $ssl_key_file                  = $::kibana::params::ssl_key_file,
-  $verify_ssl                    = $::kibana::params::verify_ssl,
-) inherits kibana::params {
+class kibana_deprecated (
+  $version                       = $::kibana_deprecated::params::version,
+  $base_url                      = $::kibana_deprecated::params::base_url,
+  $ca_cert                       = $::kibana_deprecated::params::ca_cert,
+  $install_path                  = $::kibana_deprecated::params::install_path,
+  $tmp_dir                       = $::kibana_deprecated::params::tmp_dir,
+  $port                          = $::kibana_deprecated::params::port,
+  $bind                          = $::kibana_deprecated::params::bind,
+  $es_url                        = $::kibana_deprecated::params::es_url,
+  $es_preserve_host              = $::kibana_deprecated::params::es_preserve_host,
+  $kibana_index                  = $::kibana_deprecated::params::kibana_index,
+  $elasticsearch_username        = $::kibana_deprecated::params::elasticsearch_username,
+  $elasticsearch_password        = $::kibana_deprecated::params::elasticsearch_password,
+  $default_app_id                = $::kibana_deprecated::params::default_app_id,
+  $pid_file                      = $::kibana_deprecated::params::pid_file,
+  $request_timeout               = $::kibana_deprecated::params::request_timeout,
+  $shard_timeout                 = $::kibana_deprecated::params::shard_timeout,
+  $ssl_cert_file                 = $::kibana_deprecated::params::ssl_cert_file,
+  $ssl_key_file                  = $::kibana_deprecated::params::ssl_key_file,
+  $verify_ssl                    = $::kibana_deprecated::params::verify_ssl,
+) inherits kibana_deprecated::params {
 
   if !is_integer($port) {
-    fail("Class['kibana']: port must be an integer.  Received: ${port}")
+    fail("Class['kibana_deprecated']: port must be an integer.  Received: ${port}")
   }
   if !is_integer($request_timeout) or $request_timeout < 1 {
-    fail("Class['kibana']: request_timeout must be an integer greater than 0.  Received: ${$request_timeout}")
+    fail("Class['kibana_deprecated']: request_timeout must be an integer greater than 0.  Received: ${$request_timeout}")
   }
   if !is_integer($shard_timeout) or $shard_timeout < 0 {
-    fail("Class['kibana']: shard_timeout must be an integer 0 or greater.  Received: ${$shard_timeout}")
+    fail("Class['kibana_deprecated']: shard_timeout must be an integer 0 or greater.  Received: ${$shard_timeout}")
   }
   validate_absolute_path($install_path)
   validate_absolute_path($tmp_dir)
@@ -131,9 +131,9 @@ class kibana (
   validate_bool($es_preserve_host)
   validate_bool($verify_ssl)
 
-  class { '::kibana::install': } ->
-  class { '::kibana::config': } ~>
-  class { '::kibana::service': }
+  class { '::kibana_deprecated::install': } ->
+  class { '::kibana_deprecated::config': } ~>
+  class { '::kibana_deprecated::service': }
 
-  Class['kibana::install'] ~> Class['kibana::service']
+  Class['kibana_deprecated::install'] ~> Class['kibana_deprecated::service']
 }

@@ -1,4 +1,4 @@
-# == Class: kibana::install
+# == Class: kibana_deprecated::install
 #
 # This class installs kibana.  It should not be directly called.
 #
@@ -7,13 +7,13 @@
 #
 # * Justin Lambert <mailto:jlambert@letsevenup.com>
 #
-class kibana::install (
-  $version             = $::kibana::version,
-  $base_url            = $::kibana::base_url,
-  $tmp_dir             = $::kibana::tmp_dir,
-  $install_path        = $::kibana::install_path,
-  $group               = $::kibana::group,
-  $user                = $::kibana::user,
+class kibana_deprecated::install (
+  $version             = $::kibana_deprecated::version,
+  $base_url            = $::kibana_deprecated::base_url,
+  $tmp_dir             = $::kibana_deprecated::tmp_dir,
+  $install_path        = $::kibana_deprecated::install_path,
+  $group               = $::kibana_deprecated::group,
+  $user                = $::kibana_deprecated::user,
 ) {
 
   $filename = $::architecture ? {
@@ -21,8 +21,8 @@ class kibana::install (
     /(amd64|x86_64)/ => "kibana-${version}-linux-x64",
   }
 
-  $service_provider = $::kibana::params::service_provider
-  $run_path         = $::kibana::params::run_path
+  $service_provider = $::kibana_deprecated::params::service_provider
+  $run_path         = $::kibana_deprecated::params::run_path
 
   group { $group:
     ensure => 'present',
@@ -79,9 +79,9 @@ class kibana::install (
     file { 'kibana-init-script':
       ensure  => file,
       path    => '/etc/init.d/kibana',
-      content => template('kibana/kibana.legacy.service.lsbheader.erb', "kibana/${::kibana::params::init_script_osdependend}", 'kibana/kibana.legacy.service.maincontent.erb'),
+      content => template('kibana_deprecated/kibana.legacy.service.lsbheader.erb', "kibana_deprecated/${::kibana_deprecated::params::init_script_osdependend}", 'kibana_deprecated/kibana.legacy.service.maincontent.erb'),
       mode    => '0755',
-      notify  => Class['::kibana::service'],
+      notify  => Class['::kibana_deprecated::service'],
     }
 
   }
@@ -91,8 +91,8 @@ class kibana::install (
     file { 'kibana-init-script':
       ensure  => file,
       path    => '/usr/lib/systemd/system/kibana.service',
-      content => template('kibana/kibana.service.erb'),
-      notify  => Class['::kibana::service'],
+      content => template('kibana_deprecated/kibana.service.erb'),
+      notify  => Class['::kibana_deprecated::service'],
     }
     
     file { 'kibana-run-dir':
@@ -100,7 +100,7 @@ class kibana::install (
       path   => $run_path,
       owner  => $user,
       group  => $group,
-      notify => Class['::kibana::service'],
+      notify => Class['::kibana_deprecated::service'],
     }
 
     file { 'kibana-tmpdir-d-conf':
@@ -108,7 +108,7 @@ class kibana::install (
       path    => '/etc/tmpfiles.d/kibana.conf',
       owner   => root,
       group   => root,
-      content => template('kibana/kibana.tmpfiles.d.conf.erb'),
+      content => template('kibana_deprecated/kibana.tmpfiles.d.conf.erb'),
     }
   }
 
